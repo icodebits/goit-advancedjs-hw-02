@@ -8,6 +8,7 @@ const daysSpan = document.querySelector('[data-days]');
 const hoursSpan = document.querySelector('[data-hours]');
 const minutesSpan = document.querySelector('[data-minutes]');
 const secondsSpan = document.querySelector('[data-seconds]');
+const inputField = document.querySelector('#datetime-picker');
 let timerId = null;
 
 const options = {
@@ -31,6 +32,7 @@ flatpickr('#datetime-picker', options);
 
 function startCountdown(endDate) {
     startButton.disabled = true;
+    inputField.disabled = true;
     if (timerId) {
         clearInterval(timerId);
     }
@@ -68,8 +70,15 @@ function updateTimerUI(days, hours, minutes, seconds) {
     hoursSpan.textContent = addLeadingZero(hours);
     minutesSpan.textContent = addLeadingZero(minutes);
     secondsSpan.textContent = addLeadingZero(seconds);
+
+    if (days === 0 && hours === 0 && minutes === 0 && seconds === 0) {
+      inputField.disabled = false;
+      clearInterval(timerId);
+    }
 }
 
 function addLeadingZero(value) {
     return String(value).padStart(2, '0');
 }
+
+document.onload = startButton.disabled = true;
